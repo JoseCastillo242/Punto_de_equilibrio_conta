@@ -9,6 +9,9 @@ frame.geometry("1000x500")
 def puntoequi(preven, costouni, gasfig):
     return gasfig // (preven - costouni)
 
+def puntoPlatita(resulta, preven):
+    return resulta * preven
+
 def calcular():
     try:
         preven = float(entrapre.get())
@@ -17,7 +20,10 @@ def calcular():
     
         resulta = puntoequi(preven, costouni, gasfig)
         result.config(text= f"Para Alcanzar el punto de equilibrio deberia vender {resulta} unidades")
-    
+        resultPlati = puntoPlatita(resulta, preven)
+        resultadoPlati.config(text= f"La empresa tendria que vender Q{resultPlati} para estar en su punto de equilibrio")
+
+        
     except ValueError:
         messagebox.showerror("", "El valor introducido no es valido, Introduce Por favor un Numero")
         return
@@ -38,4 +44,8 @@ btncalc = tk.Button(frame, command=calcular, text="Calcular", font=("Times New R
 btncalc.pack()
 result = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra los resultados de las operaciones
 result.pack()
+
+resultadoPlati = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra la cantidad de quetzales que se tienen que vender
+resultadoPlati.pack()
+
 frame.mainloop()
