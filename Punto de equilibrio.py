@@ -1,7 +1,9 @@
 import tkinter as tk
-from tkinter import messagebox
-import matplotlib as mt
 from tkinter import ttk
+from tkinter import messagebox
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import numpy as np
 
 frame = tk.Tk()
 frame.title("Punto de Equilibrio")
@@ -42,6 +44,26 @@ def tablita(gasfig, resulta, porcentage, preven, costouni):
     tree.insert("", "end", values=("Margen de contribucion", *margen))
     tree.insert("", "end", values=("Utilidad", *util))
     tree.pack(padx=10, pady=50) # jaja pack
+    
+def graficar(preven, costouni, gasfig, resulta):
+    cantidades = np.arange(0, resulta * 2, 1)
+    ventasT = cantidades * preven
+    costosT = cantidades * costouni + gasfig
+    
+    fig, ax = plt.subplots(figsize=(5, 4))
+    
+    ax.plot(cantidades, ventasT, label="Ventas Totales", color="green")
+    ax.plot(cantidades, costosT, label="Costos Totales", color="red")
+    ax.axvline(resulta, color="blue", linestyle="--", label=f"Punto de Equilibrio: {resulta} unidades")
+    
+    ax.set_xlabel("Unidades Vendidas")
+    ax.set_ylabel("Quetzales")
+    ax.legend()
+    ax.set_title("Gráfica del Punto de Equilibrio")
+    
+    canvas = FigureCanvasTkAgg(fig, master=frame)
+    canvas.draw()
+    canvas.get_tk_widget().pack(padx=10, pady=10)
 
 def calcular():
     try:
@@ -56,6 +78,7 @@ def calcular():
         resultadoPlati.config(text= f"La empresa tendria que vender Q{resultPlati} para estar en su punto de equilibrio")
         porcentage = opetabla(resulta)
         tablita(gasfig, resulta, porcentage, preven, costouni)
+        graficar(preven, costouni, gasfig, resulta)
         
     except ValueError:
         messagebox.showerror("", "El valor introducido no es valido, Introduce Por favor un Numero")
