@@ -9,10 +9,10 @@ frame = tk.Tk()
 frame.title("Punto de Equilibrio")
 frame.state('zoomed')
 frame.resizable(False, 1)
-frame.geometry("100x300")
+frame.geometry("1000x1000")
 
 def puntoequi(preven, costouni, gasfig):
-    return gasfig // (preven - costouni)
+    return gasfig / (preven - costouni)
 
 def puntoPlatita(resulta, preven):
     return resulta * preven
