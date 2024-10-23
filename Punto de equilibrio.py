@@ -13,6 +13,36 @@ def puntoequi(preven, costouni, gasfig):
 def puntoPlatita(resulta, preven):
     return resulta * preven
 
+def opetabla(resulta):
+    porcentage = resulta * 0.25
+    return porcentage
+
+def tablita(gasfig, resulta, porcentage, preven, costouni):
+    cantidades = [resulta - porcentage, resulta, resulta + porcentage]
+    ventas = [u * preven for u in cantidades]
+    variables = [u * costouni for u in cantidades]
+    margen = [ventas[i] - variables[i] for i in range(len(cantidades))]
+    util = [margen[i] - gasfig for i in range(len(cantidades))]
+    
+    tree = ttk.Treeview(frame, columns=("Blank", "25PorMenos", "Punto", "25PorMas"), show="headings", height=6)
+    tree.heading("Blank", text="")
+    tree.heading("25PorMenos", text="25% menos de produccion")
+    tree.heading("Punto", text="Punto de equilibrio")
+    tree.heading("25PorMas", text="25% mas de produccion")
+    tree.column("Blank", width=125)
+    tree.column("25PorMenos", width=150)
+    tree.column("Punto", width=150)
+    tree.column("25PorMas", width=150)
+
+    # Insertar datos de la tabla
+    tree.insert("", "end", values=("Numero de unidades", *cantidades))
+    tree.insert("", "end", values=("Ingreso por ventas", *ventas))
+    tree.insert("", "end", values=("Costos variables", *variables))
+    tree.insert("", "end", values=("Costos fijos", *[gasfig]*3))
+    tree.insert("", "end", values=("Margen de contribucion", *margen))
+    tree.insert("", "end", values=("Utilidad", *util))
+    tree.pack(padx=10, pady=50) # jaja pack
+
 def calcular():
     try:
         preven = float(entrapre.get())
@@ -24,10 +54,12 @@ def calcular():
         
         resultPlati = puntoPlatita(resulta, preven)
         resultadoPlati.config(text= f"La empresa tendria que vender Q{resultPlati} para estar en su punto de equilibrio")
+        porcentage = opetabla(resulta)
+        tablita(gasfig, resulta, porcentage, preven, costouni)
         
     except ValueError:
         messagebox.showerror("", "El valor introducido no es valido, Introduce Por favor un Numero")
-        return
+        return   
 
 prevenl = tk.Label(frame, text="Precio de Venta: ", font=("Times New Roman", 10))
 prevenl.pack()
@@ -47,19 +79,5 @@ result = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra los res
 result.pack()
 resultadoPlati = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra la cantidad de quetzales que se tienen que vender
 resultadoPlati.pack()
-
-tree = ttk.Treeview(frame, columns=("Blank", "25PorMenos", "Punto", "25PorMas"), show="headings", height=5)
-tree.heading("Blank", text="")
-tree.heading("25PorMenos", text="25% menos de produccion")
-tree.heading("Punto", text="Punto de equilibrio")
-tree.heading("25PorMas", text="25% mas de produccion")
-tree.column("Blank", width=100)
-tree.column("25PorMenos", width=250)
-tree.column("Punto", width=120)
-tree.column("25PorMas", width=300)
-
-# Insertar datos en el Treeview
-tree.insert("", "end", values=("Christopher Ricardo Garcia Giron", "0907-24-10087", "Líder de proyecto, Encargado de la intefaz principal"))
-tree.pack(padx=10, pady=50)  # Usamos pack en lugar de grid para este caso
 
 frame.mainloop()
