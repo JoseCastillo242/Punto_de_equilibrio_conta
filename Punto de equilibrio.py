@@ -7,7 +7,7 @@ import numpy as np
 
 frame = tk.Tk()
 frame.title("Punto de Equilibrio")
-frame.geometry("1000x500")
+frame.geometry("1000x1000")
 
 def puntoequi(preven, costouni, gasfig):
     return gasfig // (preven - costouni)
@@ -43,7 +43,7 @@ def tablita(gasfig, resulta, porcentage, preven, costouni):
     tree.insert("", "end", values=("Costos fijos", *[gasfig]*3))
     tree.insert("", "end", values=("Margen de contribucion", *margen))
     tree.insert("", "end", values=("Utilidad", *util))
-    tree.pack(padx=10, pady=50) # jaja pack
+    tree.grid(row=7, column=1, padx=10, pady=10) # jaja pack
     
 def graficar(preven, costouni, gasfig, resulta):
     cantidades = np.arange(0, resulta * 2, 1)
@@ -63,7 +63,7 @@ def graficar(preven, costouni, gasfig, resulta):
     
     canvas = FigureCanvasTkAgg(fig, master=frame)
     canvas.draw()
-    canvas.get_tk_widget().pack(padx=10, pady=10)
+    canvas.get_tk_widget().grid(row=8, column=1, padx=10, pady=10)
 
 def calcular():
     try:
@@ -85,22 +85,31 @@ def calcular():
         return   
 
 prevenl = tk.Label(frame, text="Precio de Venta: ", font=("Times New Roman", 10))
-prevenl.pack()
-cosunil = tk.Label(frame, text="Costo por Unidad: ", font=("Times New Roman", 10))
-cosunil.pack()
-gasfigl = tk.Label(frame, text="Gasto fijo: ", font=("Times New Roman", 10))
-gasfigl.pack()
+prevenl.grid(row=1, column=0, padx=10, pady=10)
+
 entrapre = tk.Entry(frame, font=("Times New Roman", 10), width=50)
-entrapre.pack()
+entrapre.grid(row=1, column=1, padx=10, pady=10)
+
+cosunil = tk.Label(frame, text="Costo por Unidad: ", font=("Times New Roman", 10))
+cosunil.grid(row=2, column=0, padx=10, pady=10)
+
 entracostuni = tk.Entry(frame, font=("Times New Roman", 10), width=50)
-entracostuni.pack()
+entracostuni.grid(row=2, column=1, padx=10, pady=10)
+
+gasfigl = tk.Label(frame, text="Gasto fijo: ", font=("Times New Roman", 10))
+gasfigl.grid(row=3, column=0, padx=10, pady=10)
+
 entragasfig = tk.Entry(frame, font=("Times New Roman", 10), width=50)
-entragasfig.pack()
+entragasfig.grid(row=3, column=1, padx=10, pady=10)
+
 btncalc = tk.Button(frame, command=calcular, text="Calcular", font=("Times New Roman", 10) )
-btncalc.pack()
+btncalc.grid(row=5, column=1, columnspan=2, pady=10)
+
 result = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra los resultados de las operaciones
-result.pack()
+result.grid(row=6, column=1, padx=10, pady=10)
+
 resultadoPlati = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra la cantidad de quetzales que se tienen que vender
-resultadoPlati.pack()
+resultadoPlati.grid(row=6, column=1, padx=10, pady=10)
+
 
 frame.mainloop()
