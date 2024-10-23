@@ -4,12 +4,15 @@ from tkinter import messagebox
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
+import os
 
+carpeta_recursos = os.path.join(os.path.dirname(__file__), 'audiovisual')
 frame = tk.Tk()
 frame.title("Punto de Equilibrio")
 frame.state('zoomed')
 frame.resizable(False, 1)
 frame.geometry("100x100")
+frame.iconbitmap(os.path.join(carpeta_recursos, 'logo.ico'))
 
 def puntoequi(preven, costouni, gasfig):
     return gasfig / (preven - costouni)
@@ -94,33 +97,39 @@ def calcular():
     except ValueError:
         messagebox.showerror("", "El valor introducido no es valido, Introduce Por favor un Numero")
         return   
+    
+hola = tk.Label(frame, text="Punto de equilibrio", font=("Times New Roman", 20))
+hola.place(relx=0.42, rely=0.002)
+
+hola2 = tk.Label(frame, text="", font=("Times New Roman", 20))
+hola2.grid(row=2, column=0, padx=10, pady=10, sticky="w")
 
 prevenl = tk.Label(frame, text="Precio de Venta: ", font=("Times New Roman", 10))
-prevenl.grid(row=1, column=0, padx=10, pady=10)
+prevenl.grid(row=3, column=0, padx=10, pady=10, sticky="w")
 
-entrapre = tk.Entry(frame, font=("Times New Roman", 10), width=50)
-entrapre.grid(row=1, column=1, padx=10, pady=10)
+entrapre = tk.Entry(frame, font=("Times New Roman", 10), width=20)
+entrapre.grid(row=3, column=1, padx=10, pady=10, sticky="w")
 
 cosunil = tk.Label(frame, text="Costo por Unidad: ", font=("Times New Roman", 10))
-cosunil.grid(row=2, column=0, padx=10, pady=10)
+cosunil.grid(row=4, column=0, padx=10, pady=10, sticky="w")
 
-entracostuni = tk.Entry(frame, font=("Times New Roman", 10), width=50)
-entracostuni.grid(row=2, column=1, padx=10, pady=10)
+entracostuni = tk.Entry(frame, font=("Times New Roman", 10), width=20)
+entracostuni.grid(row=4, column=1, padx=10, pady=10, sticky="w")
 
 gasfigl = tk.Label(frame, text="Gasto fijo: ", font=("Times New Roman", 10))
-gasfigl.grid(row=3, column=0, padx=10, pady=10)
+gasfigl.grid(row=5, column=0, padx=10, pady=10, sticky="w")
 
-entragasfig = tk.Entry(frame, font=("Times New Roman", 10), width=50)
-entragasfig.grid(row=3, column=1, padx=10, pady=10)
+entragasfig = tk.Entry(frame, font=("Times New Roman", 10), width=20)
+entragasfig.grid(row=5, column=1, padx=10, pady=10, sticky="w")
 
 btncalc = tk.Button(frame, command=calcular, text="Calcular", font=("Times New Roman", 10) )
-btncalc.grid(row=5, column=1, columnspan=2, pady=10)
+btncalc.grid(row=7, column=1, columnspan=2, pady=10, sticky="w")
 
 result = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra los resultados de las operaciones
-result.grid(row=6, column=1, padx=5, pady=5)
+result.grid(row=8, column=1, padx=5, pady=5, sticky="w")
 
 resultadoPlati = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra la cantidad de quetzales que se tienen que vender
-resultadoPlati.grid(row=7, column=1, padx=5, pady=5)
+resultadoPlati.grid(row=9, column=1, padx=5, pady=5, sticky="w")
 
 
 frame.mainloop()
