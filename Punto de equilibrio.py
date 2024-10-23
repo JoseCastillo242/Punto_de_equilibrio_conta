@@ -33,7 +33,7 @@ def tablita(gasfig, resulta, porcentage, preven, costouni):
     tree.heading("25PorMenos", text="25% menos de produccion")
     tree.heading("Punto", text="Punto de equilibrio")
     tree.heading("25PorMas", text="25% mas de produccion")
-    tree.column("Blank", width=125)
+    tree.column("Blank", width=150)
     tree.column("25PorMenos", width=150)
     tree.column("Punto", width=150)
     tree.column("25PorMas", width=150)
