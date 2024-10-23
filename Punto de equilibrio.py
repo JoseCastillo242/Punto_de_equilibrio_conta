@@ -7,7 +7,9 @@ import numpy as np
 
 frame = tk.Tk()
 frame.title("Punto de Equilibrio")
-frame.geometry("1000x1000")
+frame.state('zoomed')
+frame.resizable(False, 1)
+frame.geometry("100x300")
 
 def puntoequi(preven, costouni, gasfig):
     return gasfig // (preven - costouni)
@@ -43,27 +45,36 @@ def tablita(gasfig, resulta, porcentage, preven, costouni):
     tree.insert("", "end", values=("Costos fijos", *[gasfig]*3))
     tree.insert("", "end", values=("Margen de contribucion", *margen))
     tree.insert("", "end", values=("Utilidad", *util))
-    tree.grid(row=7, column=1, padx=10, pady=10) # jaja pack
+    tree.place(relx = 0.5, rely = 0.1) 
     
 def graficar(preven, costouni, gasfig, resulta):
-    cantidades = np.arange(0, resulta * 2, 1)
-    ventasT = cantidades * preven
-    costosT = cantidades * costouni + gasfig
+    cantidadesRango = np.arange(0, resulta * 2, 1)
     
-    fig, ax = plt.subplots(figsize=(5, 4))
+    ventasT = cantidadesRango * preven
+    costosV = cantidadesRango * costouni
+    costosT = costosV + gasfig
+    costosF = np.ones_like(cantidadesRango) * gasfig
     
-    ax.plot(cantidades, ventasT, label="Ventas Totales", color="green")
-    ax.plot(cantidades, costosT, label="Costos Totales", color="red")
-    ax.axvline(resulta, color="blue", linestyle="--", label=f"Punto de Equilibrio: {resulta} unidades")
+    fig, ax = plt.subplots(figsize=(8, 3.8))
+    
+    ax.plot(cantidadesRango, ventasT, label="Ventas Totales", color="blue")
+    ax.plot(cantidadesRango, costosT, label="Costos Totales", color="red")
+    ax.plot(cantidadesRango, costosV, label="Costos Variables", color="orange")
+    ax.plot(cantidadesRango, costosF, label="Costos Fijos", color="green")
+    ax.axvline(resulta, color="purple", linestyle="--", label=f"Punto de Equilibrio: {resulta} unidades")
     
     ax.set_xlabel("Unidades Vendidas")
     ax.set_ylabel("Quetzales")
+    ax.get_yaxis().set_major_formatter(plt.FuncFormatter(lambda x, loc: "{:,.0f}".format(x)))
     ax.legend()
-    ax.set_title("Gráfica del Punto de Equilibrio")
+    
+    for text in ax.texts:
+        if "ie6" in text.get_text():
+            text.set_visible(False)
     
     canvas = FigureCanvasTkAgg(fig, master=frame)
     canvas.draw()
-    canvas.get_tk_widget().grid(row=8, column=1, padx=10, pady=10)
+    canvas.get_tk_widget().place(relx = 0.1, rely = 0.4)
 
 def calcular():
     try:
@@ -106,10 +117,10 @@ btncalc = tk.Button(frame, command=calcular, text="Calcular", font=("Times New R
 btncalc.grid(row=5, column=1, columnspan=2, pady=10)
 
 result = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra los resultados de las operaciones
-result.grid(row=6, column=1, padx=10, pady=10)
+result.grid(row=6, column=1, padx=5, pady=5)
 
 resultadoPlati = tk.Label(frame, text="", font=("Times New Roman", 10)) #muestra la cantidad de quetzales que se tienen que vender
-resultadoPlati.grid(row=6, column=1, padx=10, pady=10)
+resultadoPlati.grid(row=7, column=1, padx=5, pady=5)
 
 
 frame.mainloop()
