@@ -107,7 +107,7 @@ integrantes.grid(row=1, column=0, padx=0, pady=5, sticky="w")
 integrante1 = tk.Label(frame, text="José Miguel Castillo Pérez 0907-24-1862", font=("Times New Roman", 10))
 integrante1.grid(row=1, column=1, padx=0, pady=5, sticky="w")
 
-integrante2 = tk.Label(frame, text="Miguel Jose Alfaro Vásquez ", font=("Times New Roman", 10))
+integrante2 = tk.Label(frame, text="Miguel José Alfaro Vásquez 0907-24-12948", font=("Times New Roman", 10))
 integrante2.grid(row=2, column=1, padx=0, pady=5, sticky="w")
 
 hola2 = tk.Label(frame, text="", font=("Times New Roman", 20))
